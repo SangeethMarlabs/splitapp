@@ -11,7 +11,7 @@ import {
     MDBCheckbox
 }
     from 'mdb-react-ui-kit';
-import './Register.css';
+import './css/Register.css'
 
 function Register() {
     const [fnameData, SetfnameData] = useState([]);
