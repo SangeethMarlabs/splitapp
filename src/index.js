@@ -6,9 +6,11 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ExpenseCategory from './components/ExpenseCategory';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+    //<ExpenseCategory />
     <App />
 );
 
