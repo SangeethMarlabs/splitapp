@@ -13,21 +13,30 @@ const Expense = (props) => {
   const IsFirstCardUp = props.firstCard
 
   const [personNames, setpersonNames] = useState([]);
-  const [newPerson, setnewPerson] = useState('');
-  const handlenewPerson = (event) => setnewPerson(event.target.value)
+  const [expenseName, setexpenseName] = useState([]);
+  const [expenseAmount, setexpenseAmount] = useState([]); 
+  const [broughtBy, setbroughtBy] = useState([]); 
+  const handleexpenseName = (event) => setexpenseName(event.target.value)
+  const handlebroughtBy = (event) => setbroughtBy(event.target.id)
+  const handleexpenseAmount = (event) => 
+  {
+    setexpenseAmount(event.target.value);
+    GetData();
+  }
 
-  const AddPersonToArray = () => {
-    const tpersons = personNames;
-    tpersons.push(newPerson);
-    console.log(newPerson);
-    setnewPerson('');
-    setpersonNames(tpersons);
-    localStorage.setItem('personNames', personNames);
-    console.log(personNames);
+  const GetData = () => {
+    setpersonNames(JSON.parse(localStorage.getItem('personNames')));
+  }
+
+  const SaveExpense = () => {
+    //localStorage.setItem('personNames', personNames);
+    localStorage.setItem("expenseName", expenseName);
+    localStorage.setItem("expenseAmount", expenseAmount);
+    localStorage.setItem("broughtBy", broughtBy);
   }
 
   const ListPersons = personNames.map((n) =>
-  <li key={n.toString()}>{n}</li>
+  <MDBRadio onClick={handlebroughtBy} name='flexRadioDefault' id={n.toString()} label={n} />
   );
 
   return (
@@ -37,20 +46,15 @@ const Expense = (props) => {
         <MDBCardText>
           Add expense here
         </MDBCardText>
-        <MDBInput value={newPerson} onChange={handlenewPerson} label='Expense name' id='expensename' type='text' /><br/>
-        <MDBInput value={newPerson} onChange={handlenewPerson} label='Amount' id='expensename' type='number' />
+        <MDBInput value={expenseName} onChange={handleexpenseName} label='Expense name' id='expensename' type='text' /><br/>
+        <MDBInput value={expenseAmount} onChange={handleexpenseAmount} label='Amount' id='expensename' type='number' />
         <MDBCardText>
           <br />
           Expense brought by<br />
           {ListPersons}
-          <MDBRadio name='flexRadioDefault' id='flexRadioDefault1' label='Sangeeth' />
-      <MDBRadio name='flexRadioDefault' id='flexRadioDefault2' label='Shanavas' />
-
-
-        </MDBCardText>
-        
+        </MDBCardText>        
         <br />
-        <MDBBtn onClick={AddPersonToArray}>Add</MDBBtn><br />
+        <MDBBtn onClick={SaveExpense}>Add</MDBBtn><br />
       </MDBCardBody>
     </MDBCard>
   );
