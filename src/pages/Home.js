@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Expense from '../components/Expense'
 import ExpenseCategory from '../components/ExpenseCategory'
 import Persons from '../components/Persons'
 import SplitView from '../components/SplitView'
@@ -16,6 +17,7 @@ const Home = (props) => {
                 <tr>
                     <td> <ExpenseCategory /> </td>
                     <td> <Persons /> </td>
+                    <td> <Expense /> </td>
                     <td><SplitView /></td>
                 </tr>
                

@@ -13,13 +13,14 @@ const SplitView = (props) => {
   let navigate = useNavigate();
   const routeChange = () => { navigate('/home'); }
   const [categoryName, setcategoryName] = useState('')
-  const [personNames, setpersonNames] = useState('')
+  const [personNames, setpersonNames] = useState([])
   //const handlecategoryName = (event) => setcategoryName(event.target.value)
 
   const GetDta = () => {
     setcategoryName(localStorage.getItem('categoryName'));
-    setpersonNames(localStorage.getItem('personNames'));
-    console.log(personNames);
+    setpersonNames(JSON.parse(localStorage.getItem('personNames')));
+    ListPersons();
+    //console.log(personNames);
   }
 
   const ClearData = () => {
@@ -31,16 +32,32 @@ const SplitView = (props) => {
       routeChange();
   }
 
+  function ListPersons() {
+    const listItems = personNames.map((p) =>
+      <li key={p.toString()}>{p}</li>
+    );
+    
+    console.log(listItems);
+    return (
+      listItems
+    );
+  }
+
+  const ListPersons1 = personNames.map((n) =>
+  <li key={n.toString()}>{n}</li>
+  );
+
     return (
       <MDBCard style={{ width: '18rem' }}>
         <MDBCardBody>
-          <MDBCardTitle>Expense split calculations</MDBCardTitle>
-          <MDBCardTitle>Category</MDBCardTitle>        
+          <MDBCardTitle>Expense Calculations</MDBCardTitle>
+          <MDBCardTitle>Expense Category</MDBCardTitle>        
           <h4><MDBBadge className='ms-2'>{categoryName}</MDBBadge></h4>
-          <hr />
-          <br />
-          <MDBCardTitle>Available persons</MDBCardTitle> 
-          {personNames}
+
+          <MDBCardTitle>Persons in expense</MDBCardTitle> 
+          <ul>{ListPersons1}</ul>
+          <MDBCardTitle>Total Expense</MDBCardTitle> 
+          <MDBCardTitle>Splitted expense</MDBCardTitle> 
           < hr/>
           <MDBBtn onClick={GetDta}>Calculate</MDBBtn>&nbsp;
           <MDBBtn onClick={ClearData}>Clear</MDBBtn>

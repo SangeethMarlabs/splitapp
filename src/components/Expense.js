@@ -4,11 +4,12 @@ import {
   MDBCardTitle,
   MDBCardText,
   MDBBtn,
-  MDBInput
+  MDBInput,
+  MDBRadio
 } from 'mdb-react-ui-kit';
 import React, { useState } from 'react'
 
-const Persons = (props) => {
+const Expense = (props) => {
   const IsFirstCardUp = props.firstCard
 
   const [personNames, setpersonNames] = useState([]);
@@ -21,8 +22,7 @@ const Persons = (props) => {
     console.log(newPerson);
     setnewPerson('');
     setpersonNames(tpersons);
-    //localStorage.setItem('personNames', personNames);
-    localStorage.setItem("personNames", JSON.stringify(personNames));
+    localStorage.setItem('personNames', personNames);
     console.log(personNames);
   }
 
@@ -33,19 +33,26 @@ const Persons = (props) => {
   return (
     <MDBCard style={{ width: '18rem' }}>
       <MDBCardBody>
-        <MDBCardTitle>Persons</MDBCardTitle>
+        <MDBCardTitle>Expense</MDBCardTitle>
         <MDBCardText>
-          Add persons here
+          Add expense here
         </MDBCardText>
+        <MDBInput value={newPerson} onChange={handlenewPerson} label='Expense name' id='expensename' type='text' /><br/>
+        <MDBInput value={newPerson} onChange={handlenewPerson} label='Amount' id='expensename' type='number' />
         <MDBCardText>
-          Persons in list<br />
+          <br />
+          Expense brought by<br />
           {ListPersons}
+          <MDBRadio name='flexRadioDefault' id='flexRadioDefault1' label='Sangeeth' />
+      <MDBRadio name='flexRadioDefault' id='flexRadioDefault2' label='Shanavas' />
+
+
         </MDBCardText>
-        <MDBInput value={newPerson} onChange={handlenewPerson} label='New person' id='categoryname' type='text' />
+        
         <br />
         <MDBBtn onClick={AddPersonToArray}>Add</MDBBtn><br />
       </MDBCardBody>
     </MDBCard>
   );
 }
-export default Persons;
+export default Expense;
