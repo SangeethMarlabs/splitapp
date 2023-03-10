@@ -11,13 +11,12 @@ import { useNavigate } from 'react-router-dom';
 const SplitView = (props) => {
   //const IsFirstCardUp = props.firstCard
   let navigate = useNavigate();
-  const routeChange = () => { navigate('/home'); }
   const [categoryName, setcategoryName] = useState('')
   const [personNames, setpersonNames] = useState([])
-  const [expenseName, setexpenseName] = useState([]);
-  const [expenseAmount, setexpenseAmount] = useState([]);
-  const [broughtBy, setbroughtBy] = useState([]);
-  const [narration, setnarration] = useState([]);
+  const [expenseName, setexpenseName] = useState('');
+  const [expenseAmount, setexpenseAmount] = useState('');
+  const [broughtBy, setbroughtBy] = useState('');
+  const [narration, setnarration] = useState('');
   //const handlecategoryName = (event) => setcategoryName(event.target.value)
 
   const GetDta = () => {
@@ -31,12 +30,12 @@ const SplitView = (props) => {
 
   const BuildNarration = () => {
     let tempArr = personNames;
-    let splitAmount = (expenseAmount / 3).toFixed(2);
+    tempArr = tempArr.filter(item => item !== broughtBy)
+    let splitAmount = (expenseAmount / personNames.length).toFixed(2);
 
-    const listNarr = personNames.map((p) =>
+    const listNarr = tempArr.map((p) =>
       <p>{p} has to pay {splitAmount} to {broughtBy}</p>
     );
-
     setnarration(listNarr)
   }
 
@@ -46,7 +45,7 @@ const SplitView = (props) => {
     localStorage.setItem('categoryName', '');
     localStorage.setItem('personNames', '');
     alert('Split data cleared');
-    routeChange();
+    navigate('/home');
   }
 
   const ListPersons1 = personNames.map((n) =>
@@ -67,7 +66,7 @@ const SplitView = (props) => {
         <MDBCardTitle>broughtBy</MDBCardTitle>
         {broughtBy}
         <MDBCardTitle>Splitted expense</MDBCardTitle>
-        {narration}
+        <p>{narration}</p>
         < hr />
         <MDBBtn onClick={GetDta}>Calculate</MDBBtn>&nbsp;
         <MDBBtn onClick={ClearData}>Clear</MDBBtn>
