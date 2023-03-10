@@ -34,11 +34,10 @@ const SplitView = (props) => {
     let splitAmount = (expenseAmount / 3).toFixed(2);
 
     const listNarr = personNames.map((p) =>
-    <p>{p.string} has to pay {splitAmount} to </p>
-  );
+      <p>{p} has to pay {splitAmount} to {broughtBy}</p>
+    );
 
-    // let data = 'Shanavas has to pay 350 to Sangeeth, Tarun has to pay 350 to Sangeeth';
-    // setnarration(data)
+    setnarration(listNarr)
   }
 
   const ClearData = () => {
