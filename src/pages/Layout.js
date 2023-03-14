@@ -14,7 +14,7 @@ const Layout = () => {
     <>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-                <a class="navbar-brand" href="/home">SplitApp &nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;Logged in as {(localStorage.getItem('userName'))}</a>
+          <a class="navbar-brand" href="/home">SplitApp &nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;Logged in as {(localStorage.getItem('userName'))}</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -29,41 +29,15 @@ const Layout = () => {
               <li class="nav-item">
                 <a class="nav-link" href="login">Login&nbsp;&nbsp;&nbsp;&nbsp;</a>
               </li>
-
-              <a class="nav-link"><i class="fas fa-user"></i></a>
+              <a class="nav-link" href="#!"><i class="fas fa-user"></i></a>
               <NavDropdown title="Profile" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={LogOut} href="#">Logout</NavDropdown.Item>
               </NavDropdown>
-
-
             </ul>
           </div>
-
-
         </div>
       </nav>
       <Outlet />
-
-      {/* <ul class="nav">
-        <li class="nav-item">
-          <Link to="/" class="nav-link active" >Home</Link>
-        </li>
-        <li class="nav-item">
-          <Link to="/contact" class="nav-link active" >Contact Us</Link>
-        </li>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <li class="nav-item">
-            <Link to="/register" class="nav-link active" >Register</Link>
-          </li>
-          <li class="nav-item">
-            <Link to="/login" class="nav-link active" >Login</Link>
-          </li>
-        </div>
-
-      </ul>*/}
-
-
-
     </>
   )
 };

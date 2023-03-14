@@ -7,9 +7,9 @@ import {
 } from 'mdb-react-ui-kit';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { Alert } from 'react-bootstrap';
 
-const SplitView = (props) => {
-  //const IsFirstCardUp = props.firstCard
+const SplitView = () => {
   let navigate = useNavigate();
   const [categoryName, setcategoryName] = useState('')
   const [personNames, setpersonNames] = useState([])
@@ -17,7 +17,6 @@ const SplitView = (props) => {
   const [expenseAmount, setexpenseAmount] = useState('');
   const [broughtBy, setbroughtBy] = useState('');
   const [narration, setnarration] = useState('');
-  //const handlecategoryName = (event) => setcategoryName(event.target.value)
 
   const GetDta = () => {
     setcategoryName(localStorage.getItem('categoryName'));
@@ -44,8 +43,7 @@ const SplitView = (props) => {
     setpersonNames('');
     localStorage.setItem('categoryName', '');
     localStorage.setItem('personNames', '');
-    alert('Split data cleared');
-    navigate('/home');
+    navigate(0);
   }
 
   const ListPersons1 = personNames.map((n) =>
