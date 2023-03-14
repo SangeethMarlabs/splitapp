@@ -12,11 +12,12 @@ import { Alert } from 'react-bootstrap';
 const ExpenseCategory = () => {
   const [categoryName, setcategoryName] = useState('')
   const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setalertMessage] = useState(false);
   const handlecategoryName = (event) => setcategoryName(event.target.value)
 
   const SaveCategory = () => {
     localStorage.setItem('categoryName', categoryName);
-
+    setalertMessage(categoryName === '' ? 'Invalid category':'Category added') 
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
@@ -34,7 +35,7 @@ const ExpenseCategory = () => {
           <br />
           <MDBBtn onClick={SaveCategory}>Add</MDBBtn>
           {showAlert && (
-          <Alert>Category added</Alert>
+          <Alert>{alertMessage}</Alert>
         )}
         </MDBCardBody>
       </MDBCard>

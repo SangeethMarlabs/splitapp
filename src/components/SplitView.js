@@ -7,7 +7,6 @@ import {
 } from 'mdb-react-ui-kit';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Alert } from 'react-bootstrap';
 
 const SplitView = () => {
   let navigate = useNavigate();
@@ -18,13 +17,14 @@ const SplitView = () => {
   const [broughtBy, setbroughtBy] = useState('');
   const [narration, setnarration] = useState('');
 
-  const GetDta = () => {
+  const GetData = () => {
     setcategoryName(localStorage.getItem('categoryName'));
     setpersonNames(JSON.parse(localStorage.getItem('personNames')));
     setexpenseName(localStorage.getItem("expenseName", expenseName));
     setexpenseAmount(localStorage.getItem("expenseAmount", expenseAmount));
     setbroughtBy(localStorage.getItem("broughtBy", broughtBy));
     BuildNarration();
+
   }
 
   const BuildNarration = () => {
@@ -33,7 +33,7 @@ const SplitView = () => {
     let splitAmount = (expenseAmount / personNames.length).toFixed(2);
 
     const listNarr = tempArr.map((p) =>
-      <p>{p} has to pay {splitAmount} to {broughtBy}</p>
+      <p key={p}>{p} has to pay {splitAmount} to {broughtBy}</p>
     );
     setnarration(listNarr)
   }
@@ -64,9 +64,9 @@ const SplitView = () => {
         <MDBCardTitle>broughtBy</MDBCardTitle>
         {broughtBy}
         <MDBCardTitle>Splitted expense</MDBCardTitle>
-        <p>{narration}</p>
+        {narration}
         < hr />
-        <MDBBtn onClick={GetDta}>Calculate</MDBBtn>&nbsp;
+        <MDBBtn onClick={GetData}>Calculate</MDBBtn>&nbsp;
         <MDBBtn onClick={ClearData}>Clear</MDBBtn>
       </MDBCardBody>
     </MDBCard>
