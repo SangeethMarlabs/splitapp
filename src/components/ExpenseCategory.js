@@ -7,15 +7,20 @@ import {
   MDBInput
 } from 'mdb-react-ui-kit';
 import React, { useState } from 'react'
+import { Alert } from 'react-bootstrap';
 
-const ExpenseCategory = (props) => {
-  const IsFirstCardUp = props.firstCard
-
+const ExpenseCategory = () => {
   const [categoryName, setcategoryName] = useState('')
+  const [showAlert, setShowAlert] = useState(false);
   const handlecategoryName = (event) => setcategoryName(event.target.value)
 
   const SaveCategory = () => {
     localStorage.setItem('categoryName', categoryName);
+
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3000); // hide the alert after 3 seconds
   }
 
     return (
@@ -28,6 +33,9 @@ const ExpenseCategory = (props) => {
           <MDBInput value={categoryName} onChange={handlecategoryName} label='Category Name' id='categoryname' type='text' />
           <br />
           <MDBBtn onClick={SaveCategory}>Add</MDBBtn>
+          {showAlert && (
+          <Alert>Category added</Alert>
+        )}
         </MDBCardBody>
       </MDBCard>
     );

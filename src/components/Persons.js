@@ -7,12 +7,14 @@ import {
   MDBInput
 } from 'mdb-react-ui-kit';
 import React, { useState } from 'react'
+import { Alert } from 'react-bootstrap';
 
 const Persons = (props) => {
   const IsFirstCardUp = props.firstCard
 
   const [personNames, setpersonNames] = useState([]);
   const [newPerson, setnewPerson] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
   const handlenewPerson = (event) => setnewPerson(event.target.value)
 
   const AddPersonToArray = () => {
@@ -21,9 +23,12 @@ const Persons = (props) => {
     console.log(newPerson);
     setnewPerson('');
     setpersonNames(tpersons);
-    //localStorage.setItem('personNames', personNames);
     localStorage.setItem("personNames", JSON.stringify(personNames));
-    console.log(personNames);
+
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3000); // hide the alert after 3 seconds
   }
 
   const ListPersons = personNames.map((n) =>
@@ -44,6 +49,9 @@ const Persons = (props) => {
         <MDBInput value={newPerson} onChange={handlenewPerson} label='New person' id='categoryname' type='text' />
         <br />
         <MDBBtn onClick={AddPersonToArray}>Add</MDBBtn><br />
+        {showAlert && (
+          <Alert>Persons added</Alert>
+        )}
       </MDBCardBody>
     </MDBCard>
   );

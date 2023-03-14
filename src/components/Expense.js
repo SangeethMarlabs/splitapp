@@ -8,18 +8,17 @@ import {
   MDBRadio
 } from 'mdb-react-ui-kit';
 import React, { useState } from 'react'
+import { Alert } from 'react-bootstrap';
 
-const Expense = (props) => {
-  const IsFirstCardUp = props.firstCard
-
+const Expense = () => {
   const [personNames, setpersonNames] = useState([]);
-  const [expenseName, setexpenseName] = useState([]);
-  const [expenseAmount, setexpenseAmount] = useState([]); 
-  const [broughtBy, setbroughtBy] = useState([]); 
+  const [expenseName, setexpenseName] = useState('');
+  const [expenseAmount, setexpenseAmount] = useState(0);
+  const [broughtBy, setbroughtBy] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
   const handleexpenseName = (event) => setexpenseName(event.target.value)
   const handlebroughtBy = (event) => setbroughtBy(event.target.id)
-  const handleexpenseAmount = (event) => 
-  {
+  const handleexpenseAmount = (event) => {
     setexpenseAmount(event.target.value);
     GetData();
   }
@@ -33,10 +32,15 @@ const Expense = (props) => {
     localStorage.setItem("expenseName", expenseName);
     localStorage.setItem("expenseAmount", expenseAmount);
     localStorage.setItem("broughtBy", broughtBy);
+
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3000); // hide the alert after 3 seconds
   }
 
   const ListPersons = personNames.map((n) =>
-  <MDBRadio onClick={handlebroughtBy} name='flexRadioDefault' id={n.toString()} label={n} />
+    <MDBRadio onClick={handlebroughtBy} name='flexRadioDefault' id={n.toString()} label={n} />
   );
 
   return (
@@ -46,15 +50,18 @@ const Expense = (props) => {
         <MDBCardText>
           Add expense here
         </MDBCardText>
-        <MDBInput value={expenseName} onChange={handleexpenseName} label='Expense name' id='expensename' type='text' /><br/>
+        <MDBInput value={expenseName} onChange={handleexpenseName} label='Expense name' id='expensename' type='text' /><br />
         <MDBInput value={expenseAmount} onChange={handleexpenseAmount} label='Amount' id='expensename' type='number' />
         <MDBCardText>
           <br />
           Expense brought by<br />
           {ListPersons}
-        </MDBCardText>        
+        </MDBCardText>
         <br />
         <MDBBtn onClick={SaveExpense}>Add</MDBBtn><br />
+        {showAlert && (
+          <Alert>Expense added</Alert>
+        )}
       </MDBCardBody>
     </MDBCard>
   );
