@@ -5,7 +5,7 @@ import {
   MDBBtn,
   MDBBadge
 } from 'mdb-react-ui-kit';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const SplitView = () => {
@@ -18,24 +18,29 @@ const SplitView = () => {
   const [narration, setnarration] = useState('');
 
   const GetData = () => {
-    setcategoryName(localStorage.getItem('categoryName'));
+    setcategoryName(localStorage.getItem('categoryName'));   
     setpersonNames(JSON.parse(localStorage.getItem('personNames')));
-    setexpenseName(localStorage.getItem("expenseName", expenseName));
-    setexpenseAmount(localStorage.getItem("expenseAmount", expenseAmount));
-    setbroughtBy(localStorage.getItem("broughtBy", broughtBy));
+    setexpenseName(localStorage.getItem("expenseName"));
+    setexpenseAmount(localStorage.getItem("expenseAmount"));
+    setbroughtBy(localStorage.getItem("broughtBy")); 
     BuildNarration();
-
   }
 
   const BuildNarration = () => {
-    let tempArr = personNames;
-    tempArr = tempArr.filter(item => item !== broughtBy)
-    let splitAmount = (expenseAmount / personNames.length).toFixed(2);
+    let arrPersons = JSON.parse(localStorage.getItem('personNames'));
+    let tempArr = JSON.parse(localStorage.getItem('personNames'));
+    let nBrought = localStorage.getItem("broughtBy");
+    let nExp = localStorage.getItem("expenseAmount");
+
+    tempArr = tempArr.filter(item => item !== nBrought)
+    let splitAmount = (nExp / arrPersons.length).toFixed(2);
 
     const listNarr = tempArr.map((p) =>
-      <p key={p}>{p} has to pay {splitAmount} to {broughtBy}</p>
+      <p key={p}>{p} has to pay {splitAmount} to {nBrought}</p>     
     );
-    setnarration(listNarr)
+ 
+    console.log(listNarr);
+    setnarration(listNarr);
   }
 
   const ClearData = () => {
@@ -61,8 +66,8 @@ const SplitView = () => {
         <ul>{ListPersons1}</ul>
         <MDBCardTitle>Total Expense</MDBCardTitle>
         {expenseName} &nbsp; : {expenseAmount}
-        <MDBCardTitle>broughtBy</MDBCardTitle>
-        {broughtBy}
+        <MDBCardTitle>broughtBy : {broughtBy}</MDBCardTitle>
+        
         <MDBCardTitle>Splitted expense</MDBCardTitle>
         {narration}
         < hr />
