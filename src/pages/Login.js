@@ -13,21 +13,7 @@ function Login() {
     function emailOnchange(e) { SetemailData(e.target.value); }
 
     function CheckLogin() {
-// To store data
-//localStorage.setItem('userName', 'Guest');
-// To retrieve data
-//alert(localStorage.getItem('Name'));
-// To store data
-//localStorage.setItem('Name', 'Shanavas');
-// To retrieve data
-//alert(localStorage.getItem('Name'));
-
-// To clear a specific item
-//localStorage.removeItem('Name');
-//alert(localStorage.getItem('Name'));
-// To clear the whole data stored in localStorage
-//localStorage.clear();
-localStorage.setItem('userName', 'Guest');
+        localStorage.setItem('userName', 'Guest');
         axios.get('https://localhost:44315/User/CheckLogin', {
             params: {
                 emailAddress: emailData,
@@ -54,10 +40,9 @@ localStorage.setItem('userName', 'Guest');
     }
 
     if (localStorage.getItem('userName') === 'Guest') {
-        
+
         return (
-            
-            <MDBContainer className="my-5">                   
+            <MDBContainer className="my-5">
                 <MDBCard>
                     <MDBRow className='g-0'>
                         <MDBCol md='6'>
@@ -73,7 +58,6 @@ localStorage.setItem('userName', 'Guest');
                                 <MDBInput autoFocus value={emailData} onChange={emailOnchange} required wrapperClass='mb-4' label='Email address' id='formControlLg1' type='email' size="lg" />
                                 <MDBInput value={passData} onChange={passOnchange} required wrapperClass='mb-4' label='Password' id='formControlLg2' type='password' size="lg" />
                                 <MDBBtn onClick={CheckLogin} className="mb-4 px-5" color='dark' size='lg'>Login</MDBBtn>
-                                
                                 <p className="mb-5 pb-lg-2" style={{ color: '#393f81' }}>Don't have an account? <a href="./register" style={{ color: '#393f81' }}>Register here</a></p>
                                 <div className='d-flex flex-row justify-content-start'>
                                     <a href="#!" className="small text-muted me-1">Terms of use.</a>
@@ -88,12 +72,10 @@ localStorage.setItem('userName', 'Guest');
     } else {
         return (
             <div className="container col-md-12 mt-3">
-
-                        <h1 style={{ color: "#414141" }}>You are already logged in as {localStorage.getItem('userName')}!!</h1>
-
+                <h1 style={{ color: "#414141" }}>You are already logged in as {localStorage.getItem('userName')}!!</h1>
+                <a href='home'>Go to home</a>
             </div>
         )
     }
-
 }
 export default Login
