@@ -1,14 +1,8 @@
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBBtn,
-  MDBInput,
-  MDBRadio
-} from 'mdb-react-ui-kit';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 import React, { useState } from 'react'
 import { Alert } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 
 const Expense = () => {
   const [personNames, setpersonNames] = useState([]);
@@ -16,6 +10,7 @@ const Expense = () => {
   const [expenseAmount, setexpenseAmount] = useState(0);
   const [broughtBy, setbroughtBy] = useState('');
   const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setalertMessage] = useState(false);
   const handleexpenseName = (event) => setexpenseName(event.target.value)
   const handlebroughtBy = (event) => setbroughtBy(event.target.id)
   const handleexpenseAmount = (event) => {
@@ -26,44 +21,49 @@ const Expense = () => {
   const GetData = () => {
     setpersonNames(JSON.parse(localStorage.getItem('personNames')));
   }
-
-  const SaveExpense = () => {
-    //localStorage.setItem('personNames', personNames);
-    localStorage.setItem("expenseName", expenseName);
-    localStorage.setItem("expenseAmount", expenseAmount);
-    localStorage.setItem("broughtBy", broughtBy);
-
+  const ShowAlert = () => {
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
     }, 3000); // hide the alert after 3 seconds
   }
 
+  const SaveExpense = () => {
+    //localStorage.setItem('personNames', personNames);
+    localStorage.setItem("expenseName", expenseName);
+    localStorage.setItem("expenseAmount", expenseAmount);
+    localStorage.setItem("broughtBy", broughtBy);
+    setalertMessage(expenseName === '' ? 'Invalid expense' : 'Expense Saved')
+    ShowAlert()
+  }
+
   const ListPersons = personNames.map((n) =>
-    <MDBRadio onClick={handlebroughtBy} name='flexRadioDefault' id={n.toString()} label={n} />
+    <Form.Check type='radio' onClick={handlebroughtBy} name='flexRadioDefault' id={n.toString()} label={n} />
   );
 
   return (
-    <MDBCard style={{ width: '18rem' }}>
-      <MDBCardBody>
-        <MDBCardTitle>Expense</MDBCardTitle>
-        <MDBCardText>
-          Add expense here
-        </MDBCardText>
-        <MDBInput value={expenseName} onChange={handleexpenseName} label='Expense name' id='expensename' type='text' /><br />
-        <MDBInput value={expenseAmount} onChange={handleexpenseAmount} label='Amount' id='expensename' type='number' />
-        <MDBCardText>
-          <br />
-          Expense brought by<br />
-          {ListPersons}
-        </MDBCardText>
-        <br />
-        <MDBBtn onClick={SaveExpense}>Add</MDBBtn><br />
+
+
+    <Card border="primary" style={{ width: '18rem' }}>
+      <Card.Header style={{ backgroundColor: "#6699ff" }}><Card.Title>Expense</Card.Title></Card.Header>
+      <Card.Body>
+        <Card.Text>Add new expense</Card.Text>
+        <lable>Expense name</lable>
+        <Form.Control value={expenseName} onChange={handleexpenseName} type="text" placeholder="Expense name" />
+        <lable>Expense amount</lable>
+        <Form.Control value={expenseAmount} onChange={handleexpenseAmount} type="number" placeholder="Expense amount" />
+        <label>Expense brought by
+        </label>{ListPersons}
+        <hr style={{ marginBottom: '1px' }} />
+        <div style={{ display: "flex" }}>
+          <Button style={{ marginLeft: "auto", marginTop: "5px" }} variant="outline-primary" onClick={SaveExpense}>Save</Button>{' '}
+        </div>
         {showAlert && (
-          <Alert>Expense added</Alert>
+          <Alert>{alertMessage}</Alert>
         )}
-      </MDBCardBody>
-    </MDBCard>
+      </Card.Body>
+    </Card>
+
   );
 }
 export default Expense;

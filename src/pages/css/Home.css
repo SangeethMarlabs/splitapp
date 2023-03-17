@@ -2,3 +2,6 @@ td {
     height: 50px;
     vertical-align: top;
   }
+  .btn {
+    text-transform: none;
+  }

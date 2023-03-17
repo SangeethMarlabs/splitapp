@@ -7,7 +7,7 @@ import './css/Home.css'
 const Home = () => {
     if(localStorage.getItem('userName') !== 'Guest'){
     return (
-        <div>
+        <div className='container col-md-12'>
             <br />
             <table>
                 <tbody>

@@ -1,12 +1,8 @@
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBBtn,
-  MDBBadge
-} from 'mdb-react-ui-kit';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import { Alert } from 'react-bootstrap';
 
 const SplitView = () => {
   let navigate = useNavigate();
@@ -16,14 +12,25 @@ const SplitView = () => {
   const [expenseAmount, setexpenseAmount] = useState('');
   const [broughtBy, setbroughtBy] = useState('');
   const [narration, setnarration] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setalertMessage] = useState(false);
 
   const GetData = () => {
-    setcategoryName(localStorage.getItem('categoryName'));   
+    setcategoryName(localStorage.getItem('categoryName'));
     setpersonNames(JSON.parse(localStorage.getItem('personNames')));
     setexpenseName(localStorage.getItem("expenseName"));
     setexpenseAmount(localStorage.getItem("expenseAmount"));
-    setbroughtBy(localStorage.getItem("broughtBy")); 
+    setbroughtBy(localStorage.getItem("broughtBy"));
     BuildNarration();
+    ShowAlert();
+  }
+
+  const ShowAlert = () => {
+    setalertMessage('Spliting expenses..')
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3000); // hide the alert after 3 seconds
   }
 
   const BuildNarration = () => {
@@ -36,18 +43,24 @@ const SplitView = () => {
     let splitAmount = (nExp / arrPersons.length).toFixed(2);
 
     const listNarr = tempArr.map((p) =>
-      <p key={p}>{p} has to pay {splitAmount} to {nBrought}</p>     
+        <label> {p} has to pay {splitAmount} to {nBrought} {'\n'} </label> 
     );
- 
+
     console.log(listNarr);
     setnarration(listNarr);
+
+
+
+
   }
 
   const ClearData = () => {
+    setalertMessage('Data cleared')
     setcategoryName('');
     setpersonNames('');
     localStorage.setItem('categoryName', '');
     localStorage.setItem('personNames', '');
+
     navigate(0);
   }
 
@@ -56,25 +69,31 @@ const SplitView = () => {
   );
 
   return (
-    <MDBCard style={{ width: '22rem' }}>
-      <MDBCardBody>
-        <MDBCardTitle>Expense Calculations</MDBCardTitle>
-        <MDBCardTitle>Expense Category</MDBCardTitle>
-        <h4><MDBBadge className='ms-2'>{categoryName}</MDBBadge></h4>
 
-        <MDBCardTitle>Persons in expense</MDBCardTitle>
+
+    <Card border="primary" style={{ width: '25rem' }}>
+      <Card.Header style={{ backgroundColor: "#6699ff" }}><Card.Title>Expense Calculations</Card.Title></Card.Header>
+      <Card.Body>
+        <Card.Text><b>Expense Category : {categoryName}</b></Card.Text>
+        <Card.Text><b>Persons in expense</b></Card.Text>
         <ul>{ListPersons1}</ul>
-        <MDBCardTitle>Total Expense</MDBCardTitle>
-        {expenseName} &nbsp; : {expenseAmount}
-        <MDBCardTitle>broughtBy : {broughtBy}</MDBCardTitle>
-        
-        <MDBCardTitle>Splitted expense</MDBCardTitle>
+        <Card.Text><b>Total expense</b></Card.Text>
+        <Card.Text>{expenseName} &nbsp; : {expenseAmount}</Card.Text>
+        <Card.Text><b>broughtBy : </b> {broughtBy}</Card.Text>
+        <Card.Text><b><u>Splitted expense</u></b></Card.Text>
         {narration}
-        < hr />
-        <MDBBtn onClick={GetData}>Calculate</MDBBtn>&nbsp;
-        <MDBBtn onClick={ClearData}>Clear</MDBBtn>
-      </MDBCardBody>
-    </MDBCard>
+        <hr style={{ marginBottom: '3px' }} />
+        <div style={{ display: "flex" }}>
+          <Button style={{ marginLeft: "auto", marginTop: "5px" }} onClick={GetData} variant="outline-primary" >Calculate</Button>{'  '}
+          <Button style={{ marginLeft: "3px", marginTop: "5px" }} onClick={ClearData} variant="outline-danger" >Clear</Button>
+        </div>
+        {showAlert && (
+          <Alert>{alertMessage}</Alert>
+        )}
+      </Card.Body>
+    </Card>
+
+
   );
 }
 export default SplitView;
