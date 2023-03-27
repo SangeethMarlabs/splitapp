@@ -17,7 +17,7 @@ const Persons = () => {
 
   useEffect(() => {
     onPageLoad();
-  }, []);
+  });
 
   const ShowAlert = () => {
     setShowAlert(true);
@@ -25,78 +25,62 @@ const Persons = () => {
       setShowAlert(false);
     }, 3000); // hide the alert after 3 seconds
   }
+
   const onPageLoad = () => {
     try {
       axios.get(baseURL).then((response) => {
-        setpersonData(response.data);
-        setpersonNames(localStorage.getItem("personNames"));
-        alert('pageload')
-        alert(localStorage.getItem("personNames"));
-        alert(personNames);
+        setpersonData(response.data.map((p)=>p.personName));
         localStorage.setItem("personData", personData);
-        console.log(localStorage.getItem("personNames"))
       });
     } catch (error) {
     }
   }
 
-  const SavePerson=()=>{
-    let arrPersons = personNames;
-    arrPersons.push(selectedPerson);
-    setpersonNames(arrPersons)
-    localStorage.setItem("personNames", JSON.stringify(personNames));
+  const SavePerson = () => {
+    localStorage.setItem("personNames", JSON.stringify(personData));
+    setpersonNames(personData);
     setalertMessage(selectedPerson === '' ? 'Invalid person' : 'Person Saved')
     ShowAlert()
   }
 
-  const AddNewPerson = () => {
-    if (newPerson !== '') {
+  const AddNewPerson = () => {   
+    if (newPerson !== ''){
       const data = { personName: newPerson };
-      axios.post('https://localhost:44315/Person/AddPerson', data)
-        .then((response) => {
-          onPageLoad();
-          setnewPerson('')
-        })
-        .catch(error => {
-          console.error(error);
-        });
+    axios.post('https://localhost:44315/Person/AddPerson', data)
+      .then((response) => {        
+        onPageLoad();
+        setnewPerson('')
+      })
+      .catch(error => {
+        console.error(error);
+      });   
     }
     setalertMessage(newPerson === '' ? 'Invalid Person' : 'New Person Added')
     ShowAlert();
   }
 
-
-  const ListPersons = () => {
-    if (personNames.length > 0) {
-      return personNames.map((n) =>
-        <li key={n.toString()}>{n}</li>
-      );
-    }
-    else{
-      return []
-    }
-  }
-
-
-
-
+  const ListPersons = personNames.map((n) =>
+    <li key={n.toString()}>{n}</li>
+  );
 
   return (
     <Card border="primary" style={{ width: '18rem' }}>
       <Card.Header style={{ backgroundColor: "#6699ff" }}><Card.Title>Persons</Card.Title></Card.Header>
       <Card.Body>
-        <label>Add Persons in expense</label>
+        <Card.Text><b>Add Persons in expense</b></Card.Text>
+        <label>Persons in list</label>
+        {ListPersons}
+
         <Form.Select onLoad={handleselectedPerson} onChange={handleselectedPerson} onSelect={handleselectedPerson} aria-label="Default select example">
           {personData.map((per) =>
             <option key={per.personId}>{per.personName}</option>
           )}
         </Form.Select>
+
+        
         <div style={{ display: "flex" }}>
-          <Button onClick={SavePerson} style={{ marginLeft: "auto", marginTop: "5px" }} variant="outline-primary" >Save</Button>{' '}
+          <Button onClick={SavePerson} style={{ marginLeft: "auto", marginTop: "5px" }}  variant="outline-primary" >Save</Button>{' '}
         </div>
-        <label >Persons in list</label>
-        <hr style={{ marginBottom: '3px', marginTop: '3px' }} />
-        {ListPersons}
         <hr style={{ marginBottom: '3px' }} />
         <label style={{ marginBottom: '3px' }}>Add new person</label>
         <tr>
