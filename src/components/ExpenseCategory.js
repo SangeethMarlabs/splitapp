@@ -24,6 +24,7 @@ const ExpenseCategory = () => {
       axios.get(baseURL).then((response) => {
         setcategories(response.data);
       });
+      setselectedCat(localStorage.getItem("categoryName"));
     } catch (error) {
     }
   }
@@ -37,6 +38,7 @@ const ExpenseCategory = () => {
 
   const SaveCategory = () => {
     localStorage.setItem("categoryName", selectedCat);
+    setselectedCat(localStorage.getItem("categoryName"));
     setalertMessage(selectedCat === '' ? 'Invalid category' : 'Category Saved')
     ShowAlert()
   }
@@ -63,7 +65,7 @@ const ExpenseCategory = () => {
         <label>Select expense category </label>
         <Form.Select onLoad={handleselectedCat} onChange={handleselectedCat} onSelect={handleselectedCat} aria-label="Default select example">
           {categories.map((cat) =>
-            <option key={cat.categoryId}>{cat.categoryName}</option>
+            <option key={cat.categoryId} selected={selectedCat === cat.categoryName}>{cat.categoryName}</option>
           )}
         </Form.Select>
         <div style={{ display: "flex" }}>

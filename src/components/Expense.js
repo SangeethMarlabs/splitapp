@@ -25,7 +25,6 @@ const Expense = () => {
 
   const onPageLoad = () => {
     try {
-      //localStorage.setItem("personData", response.data.map(p=>(p.personName)));
       setexpenseName(localStorage.getItem("expenseName"));
       setexpenseAmount(localStorage.getItem("expenseAmount"));
       setpersonNames(JSON.parse(localStorage.getItem("personNames")));
@@ -37,6 +36,7 @@ const Expense = () => {
   const GetData = () => {
     setpersonNames(JSON.parse(localStorage.getItem('personNames')));
   }
+
   const ShowAlert = () => {
     setShowAlert(true);
     setTimeout(() => {
@@ -45,7 +45,6 @@ const Expense = () => {
   }
 
   const SaveExpense = () => {
-    //localStorage.setItem('personNames', personNames);
     localStorage.setItem("expenseName", expenseName);
     localStorage.setItem("expenseAmount", expenseAmount);
     localStorage.setItem("broughtBy", broughtBy);
@@ -54,12 +53,10 @@ const Expense = () => {
   }
 
   const ListPersons = personNames.map((n) =>
-    <Form.Check type='radio' onClick={handlebroughtBy} name='flexRadioDefault' id={n.toString()} label={n} checked = {n===broughtBy ? 'true' : ''} />
+    <Form.Check type='radio' onClick={handlebroughtBy} name='flexRadioDefault' id={n.toString()} label={n} checked={n === broughtBy ? 'true' : ''} />
   );
 
   return (
-
-
     <Card border="primary" style={{ width: '18rem' }}>
       <Card.Header style={{ backgroundColor: "#6699ff" }}><Card.Title>Expense</Card.Title></Card.Header>
       <Card.Body>
@@ -79,7 +76,6 @@ const Expense = () => {
         )}
       </Card.Body>
     </Card>
-
   );
 }
 export default Expense;

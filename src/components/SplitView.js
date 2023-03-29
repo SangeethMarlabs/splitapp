@@ -21,9 +21,7 @@ const SplitView = () => {
   }, []);
 
   const onPageLoad = () => {
-    try {
-      //localStorage.setItem("personData", response.data.map(p=>(p.personName)));
-      //setpersonNames(JSON.parse(localStorage.getItem("personNames")));      
+    try {   
     } catch (error) {
     }
   }
@@ -71,9 +69,14 @@ const SplitView = () => {
     setalertMessage('Data cleared')
     setcategoryName('');
     setpersonNames('');
+    setexpenseAmount(0);
+    setexpenseName('');
+    setbroughtBy('');
     localStorage.setItem('categoryName', '');
     localStorage.setItem('personNames', '');
-
+    localStorage.setItem('expenseAmount', 0);
+    localStorage.setItem('expenseName', '');
+    localStorage.setItem('broughtBy', '');
     navigate(0);
   }
 
