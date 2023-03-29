@@ -27,17 +27,23 @@ const SplitView = () => {
   }
 
   const GetData = () => {
+    if(localStorage.getItem('categoryName') === ''){
+      setalertMessage('Data not found')
+    }else{
+      setalertMessage('Spliting expenses..')
+    }
+    ShowAlert();
+
     setcategoryName(localStorage.getItem('categoryName'));
     setpersonNames(JSON.parse(localStorage.getItem('personNames')));
     setexpenseName(localStorage.getItem("expenseName"));
     setexpenseAmount(localStorage.getItem("expenseAmount"));
     setbroughtBy(localStorage.getItem("broughtBy"));
     BuildNarration();
-    ShowAlert();
+
   }
 
-  const ShowAlert = () => {
-    setalertMessage('Spliting expenses..')
+  const ShowAlert = () => {    
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
