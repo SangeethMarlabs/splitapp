@@ -21,7 +21,7 @@ const SplitView = () => {
   }, []);
 
   const onPageLoad = () => {
-    try {   
+    try {
     } catch (error) {
     }
   }
@@ -59,10 +59,6 @@ const SplitView = () => {
 
     console.log(listNarr);
     setnarration(listNarr);
-
-
-
-
   }
 
   const ClearData = () => {
@@ -85,8 +81,6 @@ const SplitView = () => {
   );
 
   return (
-
-
     <Card border="primary" style={{ width: '25rem' }}>
       <Card.Header style={{ backgroundColor: "#6699ff" }}><Card.Title>Expense Calculations</Card.Title></Card.Header>
       <Card.Body>
@@ -108,8 +102,6 @@ const SplitView = () => {
         )}
       </Card.Body>
     </Card>
-
-
   );
 }
 export default SplitView;
