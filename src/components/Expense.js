@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import React, { useState } from 'react'
 import { Alert } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import { useEffect } from 'react';
 
 const Expense = () => {
   const [personNames, setpersonNames] = useState([]);
@@ -16,6 +17,21 @@ const Expense = () => {
   const handleexpenseAmount = (event) => {
     setexpenseAmount(event.target.value);
     GetData();
+  }
+
+  useEffect(() => {
+    onPageLoad();
+  }, []);
+
+  const onPageLoad = () => {
+    try {
+      //localStorage.setItem("personData", response.data.map(p=>(p.personName)));
+      setexpenseName(localStorage.getItem("expenseName"));
+      setexpenseAmount(localStorage.getItem("expenseAmount"));
+      setpersonNames(JSON.parse(localStorage.getItem("personNames")));
+      setbroughtBy(localStorage.getItem("broughtBy"));
+    } catch (error) {
+    }
   }
 
   const GetData = () => {
@@ -38,7 +54,7 @@ const Expense = () => {
   }
 
   const ListPersons = personNames.map((n) =>
-    <Form.Check type='radio' onClick={handlebroughtBy} name='flexRadioDefault' id={n.toString()} label={n} />
+    <Form.Check type='radio' onClick={handlebroughtBy} name='flexRadioDefault' id={n.toString()} label={n} checked = {n===broughtBy ? 'true' : ''} />
   );
 
   return (

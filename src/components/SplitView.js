@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Alert } from 'react-bootstrap';
+import { useEffect } from 'react';
 
 const SplitView = () => {
   let navigate = useNavigate();
@@ -14,6 +15,18 @@ const SplitView = () => {
   const [narration, setnarration] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setalertMessage] = useState(false);
+
+  useEffect(() => {
+    onPageLoad();
+  }, []);
+
+  const onPageLoad = () => {
+    try {
+      //localStorage.setItem("personData", response.data.map(p=>(p.personName)));
+      //setpersonNames(JSON.parse(localStorage.getItem("personNames")));      
+    } catch (error) {
+    }
+  }
 
   const GetData = () => {
     setcategoryName(localStorage.getItem('categoryName'));
@@ -43,7 +56,7 @@ const SplitView = () => {
     let splitAmount = (nExp / arrPersons.length).toFixed(2);
 
     const listNarr = tempArr.map((p) =>
-        <label> {p} has to pay {splitAmount} to {nBrought} {'\n'} </label> 
+      <label> {p} has to pay {splitAmount} to {nBrought} {'\n'} </label>
     );
 
     console.log(listNarr);

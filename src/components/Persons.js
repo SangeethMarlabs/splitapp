@@ -30,8 +30,7 @@ const Persons = () => {
       axios.get(baseURL).then((response) => {
         setpersonData(response.data);
         localStorage.setItem("personData", response.data.map(p=>(p.personName)));
-        setpersonNames(JSON.parse(localStorage.getItem("personNames")));
-        console.log(localStorage.getItem("personNames"));
+        setpersonNames(JSON.parse(localStorage.getItem("personNames")));        
       });
     } catch (error) {
     }
