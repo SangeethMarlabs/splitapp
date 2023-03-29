@@ -1,6 +1,7 @@
 td {
     height: 50px;
     vertical-align: top;
+    padding-right:15px
   }
   .btn {
     text-transform: none;

@@ -29,12 +29,9 @@ const Persons = () => {
     try {
       axios.get(baseURL).then((response) => {
         setpersonData(response.data);
-        setpersonNames(localStorage.getItem("personNames"));
-        alert('pageload')
-        alert(localStorage.getItem("personNames"));
-        alert(personNames);
-        localStorage.setItem("personData", personData);
-        console.log(localStorage.getItem("personNames"))
+        localStorage.setItem("personData", response.data.map(p=>(p.personName)));
+        setpersonNames(JSON.parse(localStorage.getItem("personNames")));
+        console.log(localStorage.getItem("personNames"));
       });
     } catch (error) {
     }
@@ -44,7 +41,7 @@ const Persons = () => {
     let arrPersons = personNames;
     arrPersons.push(selectedPerson);
     setpersonNames(arrPersons)
-    localStorage.setItem("personNames", JSON.stringify(personNames));
+    localStorage.setItem("personNames", JSON.stringify(arrPersons));
     setalertMessage(selectedPerson === '' ? 'Invalid person' : 'Person Saved')
     ShowAlert()
   }
@@ -66,21 +63,6 @@ const Persons = () => {
   }
 
 
-  const ListPersons = () => {
-    if (personNames.length > 0) {
-      return personNames.map((n) =>
-        <li key={n.toString()}>{n}</li>
-      );
-    }
-    else{
-      return []
-    }
-  }
-
-
-
-
-
   return (
     <Card border="primary" style={{ width: '18rem' }}>
       <Card.Header style={{ backgroundColor: "#6699ff" }}><Card.Title>Persons</Card.Title></Card.Header>
@@ -88,7 +70,7 @@ const Persons = () => {
         <label>Add Persons in expense</label>
         <Form.Select onLoad={handleselectedPerson} onChange={handleselectedPerson} onSelect={handleselectedPerson} aria-label="Default select example">
           {personData.map((per) =>
-            <option key={per.personId}>{per.personName}</option>
+            <option key={per.personName}>{per.personName}</option>
           )}
         </Form.Select>
         <div style={{ display: "flex" }}>
@@ -96,7 +78,9 @@ const Persons = () => {
         </div>
         <label >Persons in list</label>
         <hr style={{ marginBottom: '3px', marginTop: '3px' }} />
-        {ListPersons}
+        {personNames.map((per) =>
+            <li key={per}>{per}</li>
+          )}
         <hr style={{ marginBottom: '3px' }} />
         <label style={{ marginBottom: '3px' }}>Add new person</label>
         <tr>

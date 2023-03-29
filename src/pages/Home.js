@@ -7,11 +7,12 @@ import './css/Home.css'
 const Home = () => {
     if(localStorage.getItem('userName') !== 'Guest'){
     return (
-        <div className='container col-md-12'>
+        <div>
             <br />
             <table>
                 <tbody>
                     <tr>
+                        <td></td>
                         <td> <ExpenseCategory /> </td>
                         <td> <Persons /> </td>
                         <td> <Expense /> </td>
